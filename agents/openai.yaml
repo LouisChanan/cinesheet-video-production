@@ -1,0 +1,4 @@
+interface:
+  display_name: "CineSheet — AI Video Production Sheet"
+  short_description: "วาง Storyboard, Script, Video Prompt และ Production JSON สำหรับ Codex"
+  default_prompt: "Use $cinesheet-video-production to create an agent-ready AI Video Production Sheet from my brief; prepare the reviewable HTML sheet and validated production.json. Follow the staged approval gates for storyboard images; do not start video or audio production generation."

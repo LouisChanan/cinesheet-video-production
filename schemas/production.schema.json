@@ -1,0 +1,621 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/cinesheet/production.schema.json",
+  "title": "CineSheet production manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "project",
+    "creative",
+    "characters",
+    "assets",
+    "product_claims",
+    "scenes",
+    "delivery",
+    "workflow"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "kind",
+        "duration_seconds",
+        "aspect_ratio",
+        "language",
+        "platforms",
+        "model",
+        "objective",
+        "target_audience"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9_-]{2,79}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "ugc",
+            "commercial",
+            "short_film",
+            "series",
+            "reel",
+            "other"
+          ]
+        },
+        "duration_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 7200
+        },
+        "aspect_ratio": {
+          "enum": [
+            "9:16",
+            "16:9",
+            "1:1",
+            "4:5",
+            "2.39:1",
+            "other"
+          ]
+        },
+        "language": {
+          "type": "string",
+          "minLength": 2
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "model": {
+          "type": "string",
+          "minLength": 1
+        },
+        "objective": {
+          "type": "string"
+        },
+        "target_audience": {
+          "type": "string"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "creative": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "concept",
+        "hook",
+        "key_message",
+        "tone",
+        "cta"
+      ],
+      "properties": {
+        "concept": {
+          "type": "string"
+        },
+        "hook": {
+          "type": "string"
+        },
+        "key_message": {
+          "type": "string"
+        },
+        "tone": {
+          "type": "string"
+        },
+        "cta": {
+          "type": "string"
+        }
+      }
+    },
+    "characters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "role",
+          "identity_lock",
+          "wardrobe_lock"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "role": {
+            "type": "string",
+            "minLength": 1
+          },
+          "identity_lock": {
+            "type": "string",
+            "minLength": 1
+          },
+          "wardrobe_lock": {
+            "type": "string",
+            "minLength": 1
+          },
+          "reference_asset_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "path",
+          "source",
+          "status",
+          "description"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "product",
+              "character",
+              "location",
+              "storyboard",
+              "audio",
+              "other"
+            ]
+          },
+          "path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source": {
+            "enum": [
+              "user",
+              "generated",
+              "licensed",
+              "unknown"
+            ]
+          },
+          "status": {
+            "enum": [
+              "present",
+              "planned",
+              "missing"
+            ]
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "product_claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "text",
+          "verification",
+          "evidence",
+          "permitted_copy"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "text": {
+            "type": "string"
+          },
+          "verification": {
+            "enum": [
+              "verified",
+              "unverified",
+              "rejected"
+            ]
+          },
+          "evidence": {
+            "type": "string"
+          },
+          "permitted_copy": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "sequence",
+          "start_seconds",
+          "duration_seconds",
+          "narrative_beat",
+          "story_action",
+          "visual",
+          "audio",
+          "on_screen_text",
+          "video",
+          "continuity",
+          "acceptance_criteria"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^scene_[0-9]{2,3}$"
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "start_seconds": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "duration_seconds": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "narrative_beat": {
+            "type": "string"
+          },
+          "story_action": {
+            "type": "string",
+            "minLength": 1
+          },
+          "visual": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "shot_size",
+              "angle",
+              "movement",
+              "framing_note",
+              "storyboard_status"
+            ],
+            "properties": {
+              "shot_size": {
+                "enum": [
+                  "EWS",
+                  "WS",
+                  "MS",
+                  "CU",
+                  "ECU",
+                  "mixed"
+                ]
+              },
+              "angle": {
+                "type": "string"
+              },
+              "movement": {
+                "type": "string"
+              },
+              "framing_note": {
+                "type": "string"
+              },
+              "storyboard_status": {
+                "enum": [
+                  "planned",
+                  "generated",
+                  "approved"
+                ]
+              },
+              "storyboard_asset_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              },
+              "storyboard_panels": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "description",
+                    "image_asset_id"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "description": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "image_asset_id": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    },
+                    "reference_asset_ids": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "uniqueItems": true
+                    },
+                    "image_prompt": {
+                      "type": "string",
+                      "minLength": 20
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "audio": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "dialogue",
+              "ambience",
+              "sfx",
+              "bgm"
+            ],
+            "properties": {
+              "dialogue": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "speaker_id",
+                    "text",
+                    "language"
+                  ],
+                  "properties": {
+                    "speaker_id": {
+                      "type": "string"
+                    },
+                    "text": {
+                      "type": "string"
+                    },
+                    "language": {
+                      "type": "string"
+                    }
+                  }
+                }
+              },
+              "ambience": {
+                "type": "string"
+              },
+              "sfx": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "bgm": {
+                "type": "string"
+              }
+            }
+          },
+          "on_screen_text": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "video": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "model",
+              "prompt",
+              "negative_prompt",
+              "reference_asset_ids",
+              "unverified_capabilities",
+              "generation_status"
+            ],
+            "properties": {
+              "model": {
+                "type": "string"
+              },
+              "prompt": {
+                "type": "string",
+                "minLength": 20
+              },
+              "negative_prompt": {
+                "type": "string"
+              },
+              "reference_asset_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              },
+              "unverified_capabilities": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "generation_status": {
+                "enum": [
+                  "not_started",
+                  "queued",
+                  "completed",
+                  "failed"
+                ]
+              }
+            }
+          },
+          "continuity": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "character_ids",
+              "props",
+              "location",
+              "wardrobe_note"
+            ],
+            "properties": {
+              "character_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "uniqueItems": true
+              },
+              "props": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "location": {
+                "type": "string"
+              },
+              "wardrobe_note": {
+                "type": "string"
+              }
+            }
+          },
+          "acceptance_criteria": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "delivery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "resolution",
+        "fps",
+        "container",
+        "outputs"
+      ],
+      "properties": {
+        "resolution": {
+          "type": "string"
+        },
+        "fps": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 240
+        },
+        "container": {
+          "type": "string"
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "approval_status",
+        "production_authorized",
+        "max_auto_spend_credits",
+        "qc_notes"
+      ],
+      "properties": {
+        "approval_status": {
+          "enum": [
+            "draft",
+            "review",
+            "approved"
+          ]
+        },
+        "production_authorized": {
+          "type": "boolean"
+        },
+        "max_auto_spend_credits": {
+          "type": "number",
+          "minimum": 0
+        },
+        "qc_notes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "storyboard_preview_authorized": {
+          "type": "boolean"
+        },
+        "storyboard_preview_status": {
+          "enum": [
+            "not_started",
+            "awaiting_review",
+            "approved",
+            "changes_requested",
+            "failed"
+          ]
+        },
+        "storyboard_preview_asset_id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "storyboard_images_authorized": {
+          "type": "boolean"
+        },
+        "storyboard_images_status": {
+          "enum": [
+            "not_started",
+            "generated",
+            "declined",
+            "failed"
+          ]
+        }
+      }
+    }
+  }
+}

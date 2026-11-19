@@ -1,0 +1,316 @@
+{
+  "schema_version": "1.0.0",
+  "project": {
+    "id": "naturgenic-ugc-001",
+    "title": "Naturgenic — Newlywed Kitchen",
+    "kind": "ugc",
+    "duration_seconds": 30,
+    "aspect_ratio": "9:16",
+    "language": "th-TH",
+    "platforms": [
+      "TikTok",
+      "Facebook Reels",
+      "Instagram Reels"
+    ],
+    "model": "seedance",
+    "objective": "แนะนำผลิตภัณฑ์ทำความสะอาดคราบมันในครัวผ่านสถานการณ์คู่แต่งงานใหม่",
+    "target_audience": "คนทำอาหารที่บ้านและเจ้าของสัตว์เลี้ยง",
+    "assumptions": [
+      "ตัวอย่างเพื่อทดสอบ Skill เท่านั้น ไม่ใช่งานโฆษณาที่ผ่านอนุมัติ",
+      "บทพูดและเวลาเป็น Draft ต้องตรวจการอ่านจริง"
+    ]
+  },
+  "creative": {
+    "concept": "สามีทำอาหารเก่งแต่ไม่ล้าง ภรรยาเจอตัวช่วยทำความสะอาด ก่อนสามีอาสาล้างเอง",
+    "hook": "แต่งงานได้อาทิตย์เดียว เพิ่งรู้ความลับสามี",
+    "key_message": "Naturgenic ช่วยทำความสะอาดคราบมันและมีกลิ่น Mediterranean Citrus ตามฉลาก",
+    "tone": "UGC จริงใจ โรแมนติกคอมเมดี้ อบอุ่น",
+    "cta": "ดูรายละเอียด Naturgenic และวิธีใช้บนฉลาก"
+  },
+  "characters": [
+    {
+      "id": "wife",
+      "name": "ภรรยา",
+      "role": "ตัวเล่าเรื่อง",
+      "identity_lock": "Thai woman ~28, medium-length dark brown hair, cheerful, consistent facial identity",
+      "wardrobe_lock": "cream casual blouse, blue jeans",
+      "reference_asset_ids": []
+    },
+    {
+      "id": "husband",
+      "name": "สามี",
+      "role": "นักทำอาหาร",
+      "identity_lock": "Thai man ~30, short black hair, friendly, consistent facial identity",
+      "wardrobe_lock": "cream apron over a light shirt",
+      "reference_asset_ids": []
+    },
+    {
+      "id": "cat",
+      "name": "แมวส้ม",
+      "role": "สัตว์เลี้ยง",
+      "identity_lock": "orange domestic shorthair tabby, same markings, natural behavior",
+      "wardrobe_lock": "none",
+      "reference_asset_ids": []
+    }
+  ],
+  "assets": [
+    {
+      "id": "bottle",
+      "kind": "product",
+      "path": null,
+      "source": "user",
+      "status": "missing",
+      "description": "Example user-supplied product image is intentionally not bundled; provide a project-specific reference image."
+    }
+  ],
+  "product_claims": [
+    {
+      "id": "claim_plant",
+      "text": "Plant-based formula",
+      "verification": "verified",
+      "evidence": "Visible on provided bottle front label; not independent laboratory validation",
+      "permitted_copy": true
+    },
+    {
+      "id": "claim_ammonia",
+      "text": "No ammonia",
+      "verification": "verified",
+      "evidence": "Visible on provided bottle front label; not independently tested",
+      "permitted_copy": true
+    },
+    {
+      "id": "claim_scent",
+      "text": "Mediterranean Citrus",
+      "verification": "verified",
+      "evidence": "Visible on provided bottle front label",
+      "permitted_copy": true
+    },
+    {
+      "id": "claim_pet",
+      "text": "Pet-safe / ปลอดภัยต่อสัตว์เลี้ยง",
+      "verification": "unverified",
+      "evidence": "Not established by bottle front label; requires manufacturer safety documentation",
+      "permitted_copy": false
+    }
+  ],
+  "scenes": [
+    {
+      "id": "scene_01",
+      "sequence": 1,
+      "start_seconds": 0,
+      "duration_seconds": 10,
+      "narrative_beat": "Hook / ปัญหาบ้านใหม่",
+      "story_action": "ภรรยาถือมือถือเซลฟี่แพนให้เห็นเตาและกระทะมัน สามีทำอาหารยิ้มอยู่ด้านหลัง แมวส้มร้องจากพื้นห่างเตา",
+      "visual": {
+        "shot_size": "MS",
+        "angle": "Eye Level",
+        "movement": "natural handheld / short pan",
+        "framing_note": "Selfie wife on foreground left; husband near stove behind right; greasy pan visible",
+        "storyboard_status": "planned"
+      },
+      "audio": {
+        "dialogue": [
+          {
+            "speaker_id": "wife",
+            "text": "แต่งงานอาทิตย์เดียว เพิ่งรู้ว่าสามีทำอาหารเก่ง แต่ไม่เคยล้าง!",
+            "language": "th-TH"
+          }
+        ],
+        "ambience": "Kitchen room tone, sizzling stove",
+        "sfx": [
+          "pan sizzle",
+          "soft orange-cat meow"
+        ],
+        "bgm": "Light playful acoustic, low under speech"
+      },
+      "on_screen_text": [
+        "แต่งงานได้ 7 วัน!"
+      ],
+      "video": {
+        "model": "seedance",
+        "prompt": "Photorealistic 9:16 authentic Thai smartphone UGC romantic comedy, 10 seconds, same cozy warm white kitchen, wife Thai age 28 medium dark brown hair in cream blouse films selfie, surprised playful face, husband Thai age 30 short black hair in cream apron smiles at cooking stove with visibly greasy frying pan. Brief realistic selfie pan reveals messy cooking area. Orange tabby cat stays safely on clean distant floor, meows. Natural spoken Thai wife: \"แต่งงานอาทิตย์เดียว เพิ่งรู้ว่าสามีทำอาหารเก่ง แต่ไม่เคยล้าง!\" Natural lip sync only if model supports Thai audio, otherwise dialogue handled in post. Warm light, realistic hands, single wife, single husband, one cat, no text overlays baked in.",
+        "negative_prompt": "no face drift, no duplicates, no extra limbs, no warped bottle label, no pet interacting with cleaning liquid",
+        "reference_asset_ids": [],
+        "unverified_capabilities": [
+          "Thai native audio support",
+          "reference image roles/duration for chosen Seedance version"
+        ],
+        "generation_status": "not_started"
+      },
+      "continuity": {
+        "character_ids": [
+          "wife",
+          "husband",
+          "cat"
+        ],
+        "props": [
+          "pan",
+          "stove",
+          "phone"
+        ],
+        "location": "Warm white modern Thai apartment kitchen",
+        "wardrobe_note": "Wife cream blouse, husband cream apron, orange cat consistent"
+      },
+      "acceptance_criteria": [
+        "Exact cast and continuity",
+        "Natural home UGC tone",
+        "Dialogue plausible in 10 seconds",
+        "No unverified pet-safety assertion"
+      ]
+    },
+    {
+      "id": "scene_02",
+      "sequence": 2,
+      "start_seconds": 10,
+      "duration_seconds": 10,
+      "narrative_beat": "Discovery / Product Demo",
+      "story_action": "ภรรยาหยิบขวดจริง Naturgenic ออกจากชั้น วางโชว์ฉลากและฉีดบนคราบมันตามวิธีใช้ ก่อนเช็ดออกอย่างสมจริง",
+      "visual": {
+        "shot_size": "CU",
+        "angle": "Eye Level",
+        "movement": "steady close-up / small follow",
+        "framing_note": "Packshot and wiping action fill frame; product text must remain exact",
+        "storyboard_status": "planned"
+      },
+      "audio": {
+        "dialogue": [
+          {
+            "speaker_id": "wife",
+            "text": "เจอตัวช่วยแล้ว Naturgenic เช็ดคราบมันง่าย กลิ่น Mediterranean Citrus!",
+            "language": "th-TH"
+          }
+        ],
+        "ambience": "Soft kitchen indoor ambience",
+        "sfx": [
+          "trigger spray",
+          "cloth wipe"
+        ],
+        "bgm": "Light upbeat acoustic, very low"
+      },
+      "on_screen_text": [
+        "เช็ดคราบมันง่าย",
+        "กลิ่น Mediterranean Citrus"
+      ],
+      "video": {
+        "model": "seedance",
+        "prompt": "Photorealistic 9:16 10-second UGC kitchen cleaner demo, same wife and same warm Thai kitchen. Use the supplied bottle reference asset bottle EXACTLY: NATURGENIC Kitchen Cleaner 500mL, clear trigger, green NATURGENIC logotype, blue KITCHEN CLEANER lettering, orange fruit illustrations, blue-orange patterned trim. Close-up hands correctly use spray on greasy cold stovetop following product directions, then wipe with a cloth, visibly realistic cleaning results without magical instant effects. Spoken Thai by wife if model supports audio: \"เจอตัวช่วยแล้ว Naturgenic เช็ดคราบมันง่าย กลิ่น Mediterranean Citrus!\" Keep cat outside treatment area. Avoid hallucinated labels; use original bottle still for final compositing. No subtitles burned in.",
+        "negative_prompt": "no face drift, no duplicates, no extra limbs, no warped bottle label, no pet interacting with cleaning liquid",
+        "reference_asset_ids": [
+          "bottle"
+        ],
+        "unverified_capabilities": [
+          "Thai native audio support",
+          "reference image roles/duration for chosen Seedance version"
+        ],
+        "generation_status": "not_started"
+      },
+      "continuity": {
+        "character_ids": [
+          "wife"
+        ],
+        "props": [
+          "bottle",
+          "microfiber cloth",
+          "stove"
+        ],
+        "location": "Warm white modern Thai apartment kitchen",
+        "wardrobe_note": "Wife cream blouse, husband cream apron, orange cat consistent"
+      },
+      "acceptance_criteria": [
+        "Exact cast and continuity",
+        "Natural home UGC tone",
+        "Dialogue plausible in 10 seconds",
+        "No unverified pet-safety assertion"
+      ]
+    },
+    {
+      "id": "scene_03",
+      "sequence": 3,
+      "start_seconds": 20,
+      "duration_seconds": 10,
+      "narrative_beat": "Payoff / ครอบครัวอบอุ่น",
+      "story_action": "สามีเป็นฝ่ายเช็ดครัวสะอาด ภรรยาอุ้มแมวส้มยืนห่างจากบริเวณที่เพิ่งทำความสะอาด จากนั้น Packshot สินค้าต้นฉบับ",
+      "visual": {
+        "shot_size": "MS",
+        "angle": "Eye Level",
+        "movement": "gentle handheld then static product end",
+        "framing_note": "Husband at clean counter; wife holding orange cat behind at distance; bottle product hero final",
+        "storyboard_status": "planned"
+      },
+      "audio": {
+        "dialogue": [
+          {
+            "speaker_id": "husband",
+            "text": "ต่อไปผมล้างเองครับ!",
+            "language": "th-TH"
+          }
+        ],
+        "ambience": "Kitchen morning room tone",
+        "sfx": [
+          "cloth wipe",
+          "cute short meow"
+        ],
+        "bgm": "Happy acoustic outro below speaking voice"
+      },
+      "on_screen_text": [
+        "คนทำครัวต้องช่วยล้างด้วย!",
+        "NATURGENIC KITCHEN CLEANER"
+      ],
+      "video": {
+        "model": "seedance",
+        "prompt": "Photorealistic 9:16 10-second warm UGC romantic-comedy ending in same Thai kitchen. Same husband cream apron voluntarily wipes the counter, smiles to same wife cream blouse holding the orange tabby cat away from the cleaning area. Husband speaks naturally in Thai: \"ต่อไปผมล้างเองครับ!\" Cat gives a brief meow. Cut to a stable clean beauty product hero: exact user-supplied NATURGENIC Kitchen Cleaner bottle photo should be composited as-is, no invented label text. Soft playful happy ending. No magical cleaning, no extra humans or animals, no burnt-in subtitles.",
+        "negative_prompt": "no face drift, no duplicates, no extra limbs, no warped bottle label, no pet interacting with cleaning liquid",
+        "reference_asset_ids": [
+          "bottle"
+        ],
+        "unverified_capabilities": [
+          "Thai native audio support",
+          "reference image roles/duration for chosen Seedance version"
+        ],
+        "generation_status": "not_started"
+      },
+      "continuity": {
+        "character_ids": [
+          "husband",
+          "wife",
+          "cat"
+        ],
+        "props": [
+          "bottle",
+          "cloth",
+          "clean counter"
+        ],
+        "location": "Warm white modern Thai apartment kitchen",
+        "wardrobe_note": "Wife cream blouse, husband cream apron, orange cat consistent"
+      },
+      "acceptance_criteria": [
+        "Exact cast and continuity",
+        "Natural home UGC tone",
+        "Dialogue plausible in 10 seconds",
+        "No unverified pet-safety assertion"
+      ]
+    }
+  ],
+  "delivery": {
+    "resolution": "1080x1920",
+    "fps": 30,
+    "container": "mp4",
+    "outputs": [
+      "production.json",
+      "production-sheet.html",
+      "production-sheet.md",
+      "planned-scene-prompts"
+    ]
+  },
+  "workflow": {
+    "approval_status": "draft",
+    "production_authorized": false,
+    "max_auto_spend_credits": 0,
+    "qc_notes": [
+      "Confirm pet-related safety claims with manufacturer before advertising",
+      "Keep cat out of freshly sprayed/wet areas and follow label directions",
+      "Product label should be composited from original photo rather than AI-typography",
+      "Generation model audio and media reference features are unverified"
+    ]
+  }
+}

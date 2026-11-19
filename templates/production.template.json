@@ -1,0 +1,57 @@
+{
+  "schema_version": "1.0.0",
+  "project": {
+    "id": "new-video-001",
+    "title": "Untitled Production",
+    "kind": "ugc",
+    "duration_seconds": 30,
+    "aspect_ratio": "9:16",
+    "language": "th-TH",
+    "platforms": [
+      "TikTok",
+      "Facebook Reels",
+      "Instagram Reels"
+    ],
+    "model": "unspecified",
+    "objective": "",
+    "target_audience": "",
+    "assumptions": [
+      "Replace demo data and define scene plan before validation"
+    ]
+  },
+  "creative": {
+    "concept": "",
+    "hook": "",
+    "key_message": "",
+    "tone": "",
+    "cta": ""
+  },
+  "characters": [],
+  "assets": [],
+  "product_claims": [],
+  "scenes": [],
+  "delivery": {
+    "resolution": "1080x1920",
+    "fps": 30,
+    "container": "mp4",
+    "outputs": [
+      "production.json",
+      "production-sheet.html",
+      "production-sheet.md",
+      "planned-scene-prompts"
+    ]
+  },
+  "workflow": {
+    "approval_status": "draft",
+    "production_authorized": false,
+    "max_auto_spend_credits": 0,
+    "storyboard_preview_authorized": false,
+    "storyboard_preview_status": "not_started",
+    "storyboard_preview_asset_id": null,
+    "storyboard_images_authorized": false,
+    "storyboard_images_status": "not_started",
+    "qc_notes": [
+      "Fill in brief, scene plan and assets before approval"
+    ]
+  }
+}
