@@ -13,7 +13,7 @@
       "Instagram Reels"
     ],
     "model": "seedance",
-    "objective": "แนะนำผลิตภัณฑ์ทำความสะอาดคราบมันในครัวผ่านสถานการณ์คู่แต่งงานใหม่",
+    "objective": "วางแผนคลิปแนะนำสินค้าในฉากคู่แต่งงานใหม่แบ่งกันทำความสะอาดครัว",
     "target_audience": "คนทำอาหารที่บ้านและเจ้าของสัตว์เลี้ยง",
     "assumptions": [
       "ตัวอย่างเพื่อทดสอบ Skill เท่านั้น ไม่ใช่งานโฆษณาที่ผ่านอนุมัติ",
@@ -21,11 +21,11 @@
     ]
   },
   "creative": {
-    "concept": "สามีทำอาหารเก่งแต่ไม่ล้าง ภรรยาเจอตัวช่วยทำความสะอาด ก่อนสามีอาสาล้างเอง",
+    "concept": "สามีทำอาหารเก่งแต่ไม่ล้าง ภรรยาชวนช่วยกันเช็ดครัว ก่อนสามีอาสาล้างเอง",
     "hook": "แต่งงานได้อาทิตย์เดียว เพิ่งรู้ความลับสามี",
-    "key_message": "Naturgenic ช่วยทำความสะอาดคราบมันและมีกลิ่น Mediterranean Citrus ตามฉลาก",
+    "key_message": "ทำอาหารด้วยกันแล้วแบ่งกันดูแลครัว",
     "tone": "UGC จริงใจ โรแมนติกคอมเมดี้ อบอุ่น",
-    "cta": "ดูรายละเอียด Naturgenic และวิธีใช้บนฉลาก"
+    "cta": "ดูรายละเอียดสินค้าและวิธีใช้ก่อนเลือกซื้อ"
   },
   "characters": [
     {
@@ -67,29 +67,29 @@
     {
       "id": "claim_plant",
       "text": "Plant-based formula",
-      "verification": "verified",
-      "evidence": "Visible on provided bottle front label; not independent laboratory validation",
-      "permitted_copy": true
+      "verification": "unverified",
+      "evidence": "No product image or manufacturer documentation is included in this example.",
+      "permitted_copy": false
     },
     {
       "id": "claim_ammonia",
       "text": "No ammonia",
-      "verification": "verified",
-      "evidence": "Visible on provided bottle front label; not independently tested",
-      "permitted_copy": true
+      "verification": "unverified",
+      "evidence": "No ingredient documentation is included in this example.",
+      "permitted_copy": false
     },
     {
       "id": "claim_scent",
       "text": "Mediterranean Citrus",
-      "verification": "verified",
-      "evidence": "Visible on provided bottle front label",
-      "permitted_copy": true
+      "verification": "unverified",
+      "evidence": "No product label or scent information is included in this example.",
+      "permitted_copy": false
     },
     {
       "id": "claim_pet",
       "text": "Pet-safe / ปลอดภัยต่อสัตว์เลี้ยง",
       "verification": "unverified",
-      "evidence": "Not established by bottle front label; requires manufacturer safety documentation",
+      "evidence": "This example includes no manufacturer safety documentation for use around pets.",
       "permitted_copy": false
     }
   ],
@@ -163,41 +163,37 @@
       "sequence": 2,
       "start_seconds": 10,
       "duration_seconds": 10,
-      "narrative_beat": "Discovery / Product Demo",
-      "story_action": "ภรรยาหยิบขวดจริง Naturgenic ออกจากชั้น วางโชว์ฉลากและฉีดบนคราบมันตามวิธีใช้ ก่อนเช็ดออกอย่างสมจริง",
+      "narrative_beat": "Discovery / ชวนเช็ดครัวด้วยกัน",
+      "story_action": "ภรรยาหยิบผ้ามาเช็ดเตาที่ปิดและเย็นแล้ว เว้นพื้นที่ในภาพสำหรับใส่ภาพสินค้าหลังได้รับไฟล์อ้างอิง",
       "visual": {
         "shot_size": "CU",
         "angle": "Eye Level",
         "movement": "steady close-up / small follow",
-        "framing_note": "Packshot and wiping action fill frame; product text must remain exact",
+        "framing_note": "Keep the wiping action in focus and leave space for a verified product photo in the edit",
         "storyboard_status": "planned"
       },
       "audio": {
         "dialogue": [
           {
             "speaker_id": "wife",
-            "text": "เจอตัวช่วยแล้ว Naturgenic เช็ดคราบมันง่าย กลิ่น Mediterranean Citrus!",
+            "text": "มาช่วยกันเช็ดเตากันค่ะ!",
             "language": "th-TH"
           }
         ],
         "ambience": "Soft kitchen indoor ambience",
         "sfx": [
-          "trigger spray",
           "cloth wipe"
         ],
         "bgm": "Light upbeat acoustic, very low"
       },
       "on_screen_text": [
-        "เช็ดคราบมันง่าย",
-        "กลิ่น Mediterranean Citrus"
+        "มาช่วยกันเช็ดครัว"
       ],
       "video": {
         "model": "seedance",
-        "prompt": "Photorealistic 9:16 10-second UGC kitchen cleaner demo, same wife and same warm Thai kitchen. Use the supplied bottle reference asset bottle EXACTLY: NATURGENIC Kitchen Cleaner 500mL, clear trigger, green NATURGENIC logotype, blue KITCHEN CLEANER lettering, orange fruit illustrations, blue-orange patterned trim. Close-up hands correctly use spray on greasy cold stovetop following product directions, then wipe with a cloth, visibly realistic cleaning results without magical instant effects. Spoken Thai by wife if model supports audio: \"เจอตัวช่วยแล้ว Naturgenic เช็ดคราบมันง่าย กลิ่น Mediterranean Citrus!\" Keep cat outside treatment area. Avoid hallucinated labels; use original bottle still for final compositing. No subtitles burned in.",
-        "negative_prompt": "no face drift, no duplicates, no extra limbs, no warped bottle label, no pet interacting with cleaning liquid",
-        "reference_asset_ids": [
-          "bottle"
-        ],
+        "prompt": "Photorealistic 9:16 10-second smartphone UGC in the same warm Thai kitchen. No reference image is attached. Close on the wife's hand as she folds a cloth and makes one steady pass across the turned-off, cool stovetop. Keep space to the right for a verified product photo at the edit stage. Spoken Thai by the wife if the target supports it: \"มาช่วยกันเช็ดเตากันค่ะ!\" Keep the composition stable and the reserved space empty at the end.",
+        "negative_prompt": "no face drift, no duplicate hands, no invented packaging or label text, no baked-in subtitles",
+        "reference_asset_ids": [],
         "unverified_capabilities": [
           "Thai native audio support",
           "reference image roles/duration for chosen Seedance version"
@@ -209,7 +205,6 @@
           "wife"
         ],
         "props": [
-          "bottle",
           "microfiber cloth",
           "stove"
         ],
@@ -229,12 +224,12 @@
       "start_seconds": 20,
       "duration_seconds": 10,
       "narrative_beat": "Payoff / ครอบครัวอบอุ่น",
-      "story_action": "สามีเป็นฝ่ายเช็ดครัวสะอาด ภรรยาอุ้มแมวส้มยืนห่างจากบริเวณที่เพิ่งทำความสะอาด จากนั้น Packshot สินค้าต้นฉบับ",
+      "story_action": "สามีอาสาเช็ดเคาน์เตอร์ ภรรยาอุ้มแมวส้มยืนห่างจากบริเวณที่เช็ด ตอนจบเว้นพื้นที่สำหรับใส่ภาพสินค้าที่ตรวจแล้วในขั้นตัดต่อ",
       "visual": {
         "shot_size": "MS",
         "angle": "Eye Level",
-        "movement": "gentle handheld then static product end",
-        "framing_note": "Husband at clean counter; wife holding orange cat behind at distance; bottle product hero final",
+        "movement": "gentle handheld then static end frame",
+        "framing_note": "Husband at counter, wife holding the orange cat behind him, clear space for a product photo in the edit",
         "storyboard_status": "planned"
       },
       "audio": {
@@ -258,11 +253,9 @@
       ],
       "video": {
         "model": "seedance",
-        "prompt": "Photorealistic 9:16 10-second warm UGC romantic-comedy ending in same Thai kitchen. Same husband cream apron voluntarily wipes the counter, smiles to same wife cream blouse holding the orange tabby cat away from the cleaning area. Husband speaks naturally in Thai: \"ต่อไปผมล้างเองครับ!\" Cat gives a brief meow. Cut to a stable clean beauty product hero: exact user-supplied NATURGENIC Kitchen Cleaner bottle photo should be composited as-is, no invented label text. Soft playful happy ending. No magical cleaning, no extra humans or animals, no burnt-in subtitles.",
-        "negative_prompt": "no face drift, no duplicates, no extra limbs, no warped bottle label, no pet interacting with cleaning liquid",
-        "reference_asset_ids": [
-          "bottle"
-        ],
+        "prompt": "Photorealistic 9:16 10-second UGC romantic-comedy ending in the same warm Thai kitchen. No reference image is attached. The husband in a cream apron wipes the counter and smiles at his wife in her cream blouse holding the orange tabby a few steps away. Thai dialogue if the target supports it: \"ต่อไปผมล้างเองครับ!\" The cat gives a short meow. End on a steady view of the counter with an empty area reserved for a verified product photo in editing.",
+        "negative_prompt": "no face drift, no duplicates, no extra limbs, no invented packaging or label text, no baked-in subtitles",
+        "reference_asset_ids": [],
         "unverified_capabilities": [
           "Thai native audio support",
           "reference image roles/duration for chosen Seedance version"
@@ -276,7 +269,6 @@
           "cat"
         ],
         "props": [
-          "bottle",
           "cloth",
           "clean counter"
         ],
@@ -308,8 +300,8 @@
     "max_auto_spend_credits": 0,
     "qc_notes": [
       "Confirm pet-related safety claims with manufacturer before advertising",
-      "Keep cat out of freshly sprayed/wet areas and follow label directions",
-      "Product label should be composited from original photo rather than AI-typography",
+      "Keep the cat outside the area being cleaned",
+      "Replace the reserved space with a verified product photo once one is available",
       "Generation model audio and media reference features are unverified"
     ]
   }

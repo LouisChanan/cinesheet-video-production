@@ -9,7 +9,7 @@ Human/agent semantic QC checklist:
 - Audio: dialogue prioritized; ambience and SFX synchronize; music does not overpower.
 - Policy/rights: consent/usage rights for likeness, music and imagery; no unsupported commercial, medical, environmental or pet-safety claims.
 - Engineering: valid JSON; all referenced IDs exist; all scene starts contiguous; no cost-bearing generation before authorization; preview regenerated after change.
-- Storyboard: preview generation is authorized only by sheet approval that explicitly names the contact-sheet preview; full-image generation requires preview approval plus separate explicit authorization. Panel IDs/order and scene mapping are stable; each authorized panel gets exactly one image asset, and render previews resolve to present files.
+- Storyboard. Check the [approval gates](../SKILL.md#approval-gates) against the current files and the user's decisions. Check panel order, one usable still file per completed panel, and that the sheet shows the relevant draft or approved assets.
 - Honesty: file `present` only if path really exists; otherwise explicitly `planned`/`missing`. A `draft` is not `approved`.
 
 Don't claim full quality assurance from schema validation alone. Report warnings with the reviewer decision.

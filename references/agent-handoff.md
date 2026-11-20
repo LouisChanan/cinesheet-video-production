@@ -4,15 +4,11 @@ Canonical handoff file: `production.json`. The interactive HTML is a human-facin
 
 ## Gates
 
-- Draft/review: downstream agents may read, estimate or preview **without** charging or publishing.
-- Approved: creative/shot plan is signed off. Only when the approval prompt explicitly says so, that approval also authorizes one storyboard contact-sheet preview; it does not authorize full-size stills or video.
-- Full storyboard stills: require an approved contact-sheet preview and a separate explicit yes naming the exact image count. Do not buy credits; if the chosen tool requires a purchase or cost cannot be disclosed, stop and ask.
-- Video/audio production authorized: requires a **separate explicit permission** after stating model/provider, scope and known cost or spend cap. In v1.0, the skill does not initiate downstream video/audio generation; it may prepare a handoff.
-- A later automation implementation should evaluate `workflow.approval_status`, storyboard preview/image authorization states, `production_authorized`, `max_auto_spend_credits`, availability/cost and rights before mutating.
+Follow the [approval gates](../SKILL.md#approval-gates) for the written plan, draft visuals, full storyboard set, and separate production permission. Before executing an authorized handoff, check the current files, tool availability, recorded permissions, cost or spend cap, and rights. In a legacy manifest with absent storyboard fields, treat the image authorization as unrecorded.
 
 ## Agent contract
 
-- Storyboard Image Agent reads the approved `storyboard_panels` in order; it may create the contact sheet only when preview authorization is true, and one full still per panel only when full-image authorization is true. It writes actual filenames back to the manifest only after files exist.
+- Storyboard Image Agent reads `storyboard_panels` in scene and panel order. For drafts, use the preview authorization, which can be recorded before plan approval. For full stills, check the approved plan, approved contact sheet, and separate set authorization together. Record actual output files when they exist.
 - Video Agent reads scenes in numerical order, references verified assets, creates clips, reports per-scene job IDs and status (outside this v1 schema or via a subsequent versioned schema).
 - Audio Agent reads dialogue/ambience/SFX/BGM; never reuse copyrighted voices or music without rights.
 - Editing Agent reads scene timing and layout, creates composite and QA report; inspect original product label during finishing.
