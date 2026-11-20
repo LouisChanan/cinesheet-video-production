@@ -87,28 +87,45 @@ details[open]>summary:after{content:"−"}
 .scene-head{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:16px;align-items:center;margin-bottom:20px}
 .scene-number{display:grid;place-items:center;width:46px;height:46px;border:1px solid var(--orange);color:var(--orange);font-weight:850;font-size:.9rem}
 .scene-title-wrap{min-width:0}
-.scene-title-wrap .section-kicker{margin:0 0 4px}
 .scene-time{font-size:.86rem;font-weight:800;white-space:nowrap;color:var(--green);border-bottom:2px solid var(--orange);padding:3px 0}
-.scene-grid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:clamp(22px,4vw,52px);align-items:start}
+.scene-action-lead{max-width:75ch;margin:0 0 20px;border-left:3px solid var(--orange);padding:3px 0 3px 14px}
+.scene-action-lead .fact-label{margin-bottom:2px}
+.scene-action{margin:0;font-size:1rem;line-height:1.65}
+.scene-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:clamp(22px,4vw,44px);align-items:start}
 .scene-media,.scene-content{min-width:0}
 .storyboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px;align-items:start}
+.scene-storyboard{margin-top:16px}
+.scene-storyboard h3{margin-bottom:9px;color:var(--green)}
 .storyboard-panel{min-width:0}
 .storyboard-frame{margin:0;background:var(--soft)}
 .storyboard-frame a{display:block}
 .storyboard-frame img{display:block;width:100%;height:auto;max-height:680px;object-fit:contain;background:var(--soft)}
 .storyboard-frame figcaption{display:flex;justify-content:space-between;gap:8px;padding:8px 2px 2px;font-size:.8rem;line-height:1.4;color:var(--muted)}
 .storyboard-empty{border-left:3px solid var(--line);padding:9px 12px;color:var(--muted)}
-.scene-location{margin:0 0 18px}
-.scene-location h3{display:flex;justify-content:space-between;gap:8px;margin:0 0 8px;color:var(--green)}
-.scene-location figure{margin:0}
-.scene-location-image{display:block;width:100%;height:auto;max-height:460px;object-fit:contain;background:var(--soft);border:1px solid var(--line)}
-.scene-location figcaption,.scene-location-status{display:block;margin-top:5px;color:var(--muted);font-size:.78rem}
+.scene-location{display:grid;grid-template-columns:164px minmax(0,1fr);gap:13px;align-items:center;margin:0;padding:0 0 14px;border-bottom:1px solid var(--line)}
+.scene-location-media{display:grid;width:164px;height:116px;place-items:center;overflow:hidden;background:var(--soft);border:1px solid var(--line)}
+.scene-location-image{display:block;width:100%;height:100%;object-fit:contain}
+.scene-location-empty{color:var(--muted);font-size:.76rem;text-align:center;padding:10px}
+.scene-location-copy{min-width:0}
+.scene-location-copy h3{margin:0 0 3px;color:var(--green);font-size:.91rem}
+.scene-location-name{margin:0;color:var(--ink);font-size:.86rem;line-height:1.4;overflow-wrap:anywhere}
+.scene-location-status{display:block;margin-top:5px;color:var(--muted);font-size:.75rem}
+.scene-location-open{display:inline-block;margin-top:4px;color:var(--green);font-size:.76rem;font-weight:750}
 .ref-list{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .ref-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid #c8d4bc;color:var(--green);font-size:.76rem;background:#f1f4e9;overflow-wrap:anywhere}
 .ref-chip b{color:var(--orange);font-size:.68rem;letter-spacing:.06em}
 .ref-chip>*{min-width:0}
-.scene-action{font-size:1rem;line-height:1.7;max-width:66ch}
-.scene-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:12px;margin:18px 0;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.scene-facts{display:flex;flex-wrap:wrap;gap:5px 16px;margin:0 0 9px}
+.scene-fact{display:inline-flex;gap:5px;align-items:baseline;color:var(--ink);font-size:.84rem;line-height:1.4}
+.scene-fact .fact-label{display:inline;margin:0;color:var(--muted);font-size:.66rem;letter-spacing:.07em}
+.scene-framing{margin:0 0 14px;color:var(--muted);font-size:.84rem;line-height:1.5}
+.scene-script{margin:16px 0 18px}
+.scene-script h3{margin-bottom:5px;color:var(--green)}
+.scene-onscreen{margin-top:9px}
+.production-details{border-top:1px solid var(--line);margin-top:13px;padding-top:9px}
+.production-details>summary{font-weight:750;color:var(--green);min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:12px;list-style:none}
+.production-details-content{padding:4px 0 8px}
+.production-details-content h4{margin:14px 0 5px;font-size:.88rem;color:var(--green)}
 .fact-label{display:block;margin-bottom:3px;color:var(--muted);font-size:.69rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
 .fact-value{font-size:.89rem;line-height:1.45}
 .dialogue-list{list-style:none;margin:12px 0;padding:0}
@@ -200,7 +217,10 @@ button:hover{background:#174536}
  .scene-time{grid-column:2;justify-self:start;margin-top:2px}
  .storyboard-grid{grid-template-columns:1fr}
  .storyboard-frame img{max-height:none}
- .scene-facts,.audio-grid,.claims-list{grid-template-columns:1fr}
+ .scene-facts{gap:6px 12px}
+ .audio-grid,.claims-list{grid-template-columns:1fr}
+ .scene-location{grid-template-columns:136px minmax(0,1fr);gap:10px}
+ .scene-location-media{width:136px;height:100px}
  .cast-grid,.asset-list{grid-template-columns:1fr}
  .cast-person{border-right:0;border-bottom:1px solid var(--line);padding-bottom:12px}
  .asset-row{grid-template-columns:minmax(0,1fr) auto}
@@ -374,11 +394,14 @@ def scene_location_html(scene, assets, approval_status):
     if not refs:
         label = location or "Location not confirmed"
         return (
-            '<div class="scene-location"><h3>Location reference</h3>'
-            f'<p class="small">{e(label)}</p>'
-            '<p class="scene-location-status">Planned · no location image linked</p></div>'
+            '<div class="scene-location"><div class="scene-location-media">'
+            '<span class="scene-location-empty">No location image</span></div>'
+            '<div class="scene-location-copy"><h3>Location reference</h3>'
+            f'<p class="scene-location-name">{e(label)}</p>'
+            '<span class="scene-location-status">Location reference · Planned · no location image linked</span>'
+            '</div></div>'
         )
-    parts = ['<div class="scene-location"><h3>Location reference</h3>']
+    parts = ['<div class="scene-location">']
     for asset in refs:
         status = assets.status(asset, image=True)
         label = (
@@ -386,17 +409,25 @@ def scene_location_html(scene, assets, approval_status):
             else "Draft" if status == "present" else FILE_STATUS_LABELS[status]
         )
         name = asset_display_name(asset)
+        location_name = location or name
         href = assets.href(asset, image=True)
         if href:
             parts.append(
-                '<figure><a href="' + e(href) + '"><img class="scene-location-image" loading="lazy" src="'
-                + e(href) + '" alt="Location reference: ' + e(name) + '"></a>'
-                + '<figcaption>Location reference · ' + e(name) + ' · ' + e(label) + '</figcaption></figure>'
+                '<a class="scene-location-media" href="' + e(href) + '" aria-label="Open full location reference: '
+                + e(name) + '"><img class="scene-location-image" loading="lazy" src="' + e(href)
+                + '" alt="Location reference: ' + e(name) + '"></a>'
             )
         else:
             parts.append(
-                '<p class="scene-location-status">Location reference · ' + e(name) + ' · ' + e(label) + '</p>'
+                '<div class="scene-location-media"><span class="scene-location-empty">No location image</span></div>'
             )
+        parts.append(
+            '<div class="scene-location-copy"><h3>Location reference</h3><p class="scene-location-name">'
+            + e(location_name) + '</p><span class="scene-location-status">Location reference · ' + e(name) + ' · '
+            + e(label) + '</span>'
+            + ('<a class="scene-location-open" href="' + e(href) + '">Open full image ↗</a>' if href else '')
+            + '</div>'
+        )
     return "".join(parts) + "</div>"
 
 
@@ -416,7 +447,13 @@ def scene_location_markdown(scene, assets, approval_status):
         href = assets.href(asset, image=True)
         name = markdown_text(asset_display_name(asset))
         if href:
-            lines += ["", f"![Location reference · {label} · {name}]({href})"]
+            escaped_href = e(href)
+            lines += [
+                "",
+                f'<a href="{escaped_href}"><img src="{escaped_href}" alt="Location reference: {e(name)}" width="164" height="116" style="object-fit:contain"></a>',
+                "",
+                f"Location reference · {name} · {label}",
+            ]
         else:
             lines += ["", f"Location reference · {name} · {label}"]
     return lines
@@ -731,30 +768,46 @@ def render_html(d, base_dir=None, brand_accent=None, brand_secondary=None, *, ou
         visual=scene['visual'];audio=scene['audio'];continuity=scene['continuity']
         start=scene['start_seconds'];end=start+scene['duration_seconds']
         parts += ['<section class="scene" id="'+e(scene['id'])+'" aria-labelledby="heading-'+e(scene['id'])+'">']
-        parts += ['<div class="scene-head"><span class="scene-number" aria-hidden="true">'+str(index).zfill(2)+'</span><div class="scene-title-wrap"><p class="section-kicker">Scene '+str(index).zfill(2)+'</p><h2 id="heading-'+e(scene['id'])+'">'+e(scene['narrative_beat'])+'</h2></div><span class="scene-time">'+str(start).zfill(2)+'–'+str(end).zfill(2)+'s</span></div>']
-        parts += ['<div class="scene-grid"><div class="scene-media">'+scene_location_html(scene,assets,workflow["approval_status"])+storyboard_preview_html(scene,assets)+'</div><div class="scene-content">']
-        parts += ['<p class="scene-action">'+e(scene['story_action'])+'</p>']
-        facts=[('Shot size',visual.get('shot_size','')),('Angle',visual.get('angle','')),('Movement',visual.get('movement',''))]
-        parts += ['<div class="scene-facts">'+''.join('<div><span class="fact-label">'+label+'</span><span class="fact-value">'+e(value)+'</span></div>' for label,value in facts)+'</div>']
-        parts += ['<p class="small">'+e(visual.get('framing_note',''))+'</p>']
+        parts += ['<div class="scene-head"><span class="scene-number" aria-hidden="true">'+str(index).zfill(2)+'</span><div class="scene-title-wrap"><h2 id="heading-'+e(scene['id'])+'">'+e(scene['narrative_beat'])+'</h2></div><span class="scene-time">'+str(start).zfill(2)+'–'+str(end).zfill(2)+'s</span></div>']
+        parts += ['<div class="scene-action-lead"><span class="fact-label">Scene action</span><p class="scene-action">'+e(scene['story_action'])+'</p></div>']
+        parts += ['<div class="scene-grid"><div class="scene-media">'+scene_location_html(scene,assets,workflow["approval_status"])
+                  +'<section class="scene-storyboard" aria-labelledby="storyboard-'+e(scene['id'])+'"><h3 id="storyboard-'+e(scene['id'])+'">Storyboard frames</h3>'
+                  +storyboard_preview_html(scene,assets)+'</section></div><div class="scene-content">']
+        facts=[('Shot',visual.get('shot_size','')),('Angle',visual.get('angle','')),('Move',visual.get('movement',''))]
+        parts += ['<div class="scene-facts">'+''.join('<div class="scene-fact"><span class="fact-label">'+label+'</span><span class="fact-value">'+e(value)+'</span></div>' for label,value in facts)+'</div>']
+        framing=visual.get('framing_note','')
+        if framing:
+            parts += ['<p class="scene-framing">'+e(framing)+'</p>']
+        parts += ['<section class="scene-script" aria-label="Dialogue and on-screen text"><h3>Dialogue &amp; on-screen text</h3>']
         if audio.get('dialogue'):
             lines=[]
             for line in audio['dialogue']:
                 speaker=character_by_id.get(line['speaker_id'],{}).get('name',line['speaker_id'])
                 lines.append('<li><span class="dialogue-speaker">'+e(speaker)+'</span><span lang="'+e(line['language'])+'">'+e(line['text'])+'</span></li>')
-            parts += ['<h3>Dialogue</h3><ul class="dialogue-list">'+''.join(lines)+'</ul>']
+            parts += ['<ul class="dialogue-list">'+''.join(lines)+'</ul>']
+        else:
+            parts += ['<p class="small">No dialogue planned</p>']
         on_screen=scene.get('on_screen_text',[])
         text_html=''.join('<span class="text-chip">'+e(text)+'</span>' for text in on_screen) if on_screen else '<span class="small">None planned</span>'
-        parts += ['<div><span class="fact-label">On-screen text · add in edit</span>'+text_html+'</div>']
-        parts += ['<details class="audio-details"><summary><span>Sound plan</span><span class="detail-meta">Ambience · SFX · BGM</span></summary><div class="audio-grid"><div><span class="fact-label">Ambience</span><p>'+e(audio.get('ambience',''))+'</p></div><div><span class="fact-label">SFX</span><p>'+e(', '.join(audio.get('sfx',[])))+'</p></div><div><span class="fact-label">BGM</span><p>'+e(audio.get('bgm',''))+'</p></div></div></details>']
-        parts += ['<details class="continuity-details"><summary><span>Continuity notes</span><span class="detail-meta">'+str(len(continuity.get('character_ids',[])))+' characters</span></summary><p class="continuity-copy"><strong>Wardrobe</strong> · '+e(continuity.get('wardrobe_note',''))+'</p><p class="continuity-copy"><strong>Location</strong> · '+e(continuity.get('location',''))+'</p><p class="continuity-copy"><strong>Props</strong> · '+e(', '.join(continuity.get('props',[])))+'</p></details>']
+        parts += ['<div class="scene-onscreen"><span class="fact-label">On-screen text · add in edit</span>'+text_html+'</div></section>']
         review_lists = [
             f'<h3>{e(label)}</h3><ul>' + ''.join(f'<li>{e(item)}</li>' for item in items) + '</ul>'
             for label,items in scene_review_lists(scene) if items
         ]
+        parts += ['<details class="production-details"><summary><span>Production details</span><span class="detail-meta">Sound · Continuity · Review · Prompts</span></summary><div class="production-details-content">']
+        parts += ['<h4>Sound</h4><div class="audio-grid"><div><span class="fact-label">Ambience</span><p>'+e(audio.get('ambience',''))+'</p></div><div><span class="fact-label">SFX</span><p>'+e(', '.join(audio.get('sfx',[])))+'</p></div><div><span class="fact-label">BGM</span><p>'+e(audio.get('bgm',''))+'</p></div></div>']
+        continuity_items=[]
+        if continuity.get('character_ids'):
+            continuity_items.append('<p class="continuity-copy"><strong>Characters</strong> · '+e(', '.join(character_by_id.get(cid,{}).get('name',cid) for cid in continuity['character_ids']))+'</p>')
+        if continuity.get('wardrobe_note'):
+            continuity_items.append('<p class="continuity-copy"><strong>Wardrobe</strong> · '+e(continuity['wardrobe_note'])+'</p>')
+        if continuity.get('props'):
+            continuity_items.append('<p class="continuity-copy"><strong>Props</strong> · '+e(', '.join(continuity['props']))+'</p>')
+        if continuity_items:
+            parts += ['<h4>Continuity</h4>'+''.join(continuity_items)]
         if review_lists:
             parts += ['<div class="scene-review">'+''.join(review_lists)+'</div>']
-        parts += ['<div class="prompt-stack">'+video_prompt_html(scene,assets)+'</div></div></div></section>']
+        parts += ['<h4>Model prompt &amp; references</h4><div class="prompt-stack">'+video_prompt_html(scene,assets)+'</div></div></details></div></div></section>']
     parts += [asset_rows_html(assets,scenes,characters)]
     if d.get('product_claims'):
         claim_rows=[]
@@ -852,9 +905,9 @@ def render_markdown(d, base_dir=None, *, output_dir=None):
         lines += [
             "", f'### {scene["id"]} · {start}–{end}s · {markdown_text(scene["narrative_beat"])}',
             "", markdown_text(scene["story_action"]),
-            "", f"**Shot** · {shot}",
         ]
         lines += scene_location_markdown(scene, assets, workflow["approval_status"])
+        lines += ["", "**Storyboard frames**"]
         panels = scene_panel_records(scene, assets.by_id)
         if not panels:
             lines += ["", "No storyboard panels linked."]
@@ -872,16 +925,30 @@ def render_markdown(d, base_dir=None, *, output_dir=None):
             lines += markdown_references(panel.get("reference_asset_ids", []), assets, "Reference assets")
             if panel.get("image_prompt"):
                 lines += markdown_prompt("AI Image Prompt", panel["image_prompt"])
+        lines += ["", f"**Camera** · {shot}"]
+        if visual.get("framing_note"):
+            lines += ["", f'**Framing** · {markdown_text(visual["framing_note"])}']
+        lines += ["", "**Dialogue & on-screen text**"]
         for spoken in audio["dialogue"]:
             speaker = characters.get(spoken["speaker_id"], {}).get("name", spoken["speaker_id"])
             lines += ["", f'**{markdown_text(speaker)}** · {markdown_text(spoken["text"])}']
+        if not audio["dialogue"]:
+            lines += ["", "No dialogue planned."]
         lines += ["", "**On-screen text · add in edit**", ""]
         lines += [f"- {markdown_text(text)}" for text in scene["on_screen_text"]] or ["None planned"]
         lines += [
-            "", f'**Ambience** · {markdown_text(audio["ambience"])}',
+            "", "**Production details**", "",
+            f'**Ambience** · {markdown_text(audio["ambience"])}',
             "", f'**SFX** · {markdown_text(", ".join(audio["sfx"]))}',
             "", f'**BGM** · {markdown_text(audio["bgm"])}',
         ]
+        character_names = [characters.get(cid, {}).get("name", cid) for cid in scene["continuity"]["character_ids"]]
+        if character_names:
+            lines += ["", f'**Characters** · {markdown_text(", ".join(character_names))}']
+        if scene["continuity"]["wardrobe_note"]:
+            lines += ["", f'**Wardrobe continuity** · {markdown_text(scene["continuity"]["wardrobe_note"])}']
+        if scene["continuity"]["props"]:
+            lines += ["", f'**Props** · {markdown_text(", ".join(scene["continuity"]["props"]))}']
         for label, items in scene_review_lists(scene):
             if items:
                 lines += ["", f"**{label}**", "", *(f"- {markdown_text(item)}" for item in items)]

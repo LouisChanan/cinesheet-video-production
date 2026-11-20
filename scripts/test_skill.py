@@ -91,6 +91,26 @@ def draft_with_images(folder):
     return data
 
 
+def scene_html_fragment(markup, scene_id):
+    start = markup.index(f'<section class="scene" id="{scene_id}"')
+    candidates = [
+        position for marker in ('<section class="scene" ', '<section class="asset-section"')
+        if (position := markup.find(marker, start + 1)) >= 0
+    ]
+    end = min(candidates) if candidates else len(markup)
+    return markup[start:end]
+
+
+def scene_markdown_fragment(markdown, scene_id):
+    start = markdown.index(f"### {scene_id} ·")
+    candidates = [
+        position for marker in ("### ", "## Project assets")
+        if (position := markdown.find(marker, start + 1)) >= 0
+    ]
+    end = min(candidates) if candidates else len(markdown)
+    return markdown[start:end]
+
+
 def add_full_set(data, folder):
     data["workflow"].update(
         approval_status="approved",
@@ -134,8 +154,16 @@ class ExampleTests(unittest.TestCase):
         for scene in data["scenes"]:
             sid = scene["id"]
             self.assertIn(f'href="#{sid}"', markup)
-            section = markup.split(f'<section class="scene" id="{sid}"', 1)[1].split("</section>", 1)[0]
-            self.assertLess(section.index('class="scene-media"'), section.index('class="scene-action"'))
+            section = scene_html_fragment(markup, sid)
+            self.assertLess(section.index('class="scene-action-lead"'), section.index('class="scene-location"'))
+            self.assertLess(section.index('class="scene-location"'), section.index('class="scene-storyboard"'))
+            self.assertLess(section.index('class="scene-storyboard"'), section.index('class="scene-script"'))
+            self.assertLess(section.index('class="scene-script"'), section.index('class="production-details"'))
+            self.assertEqual(section.count('class="scene-number"'), 1)
+            self.assertNotIn('section-kicker">Scene ', section)
+            self.assertIn("Production details", section)
+        self.assertIn(".scene-location-media{display:grid;width:164px;height:116px", markup)
+        self.assertIn(".scene-location-media{width:136px;height:100px}", markup)
         for token in (
             "summary:focus-visible,button:focus-visible,a:focus-visible", "@media(max-width:800px)",
             "@media(max-width:560px)", 'class="asset-id-details"', "Project assets · ไฟล์และภาพอ้างอิง",
@@ -295,11 +323,16 @@ class StoryboardTests(unittest.TestCase):
         self.assertFalse(any("no location reference" in warning for warning in warnings))
         markup, markdown = self.outputs(data)
         for scene in data["scenes"]:
-            section = markup.split(f'<section class="scene" id="{scene["id"]}"', 1)[1].split("</section>", 1)[0]
+            section = scene_html_fragment(markup, scene["id"])
             self.assertIn("assets/location-kitchen.svg", section)
-        self.assertEqual(markdown.count("![Location reference · Draft"), len(data["scenes"]))
+            md_section = scene_markdown_fragment(markdown, scene["id"])
+            self.assertLess(md_section.index("**Location reference**"), md_section.index("<img src="))
+            self.assertLess(md_section.index("<img src="), md_section.index("**Storyboard frames**"))
+            self.assertLess(md_section.index("**Storyboard frames**"), md_section.index("**Dialogue & on-screen text**"))
+            self.assertLess(md_section.index("**Dialogue & on-screen text**"), md_section.index("**Production details**"))
+        self.assertEqual(markdown.count('<img src="assets/location-kitchen.svg"'), len(data["scenes"]))
         self.assertEqual(markup.count('id="asset-group-location"'), 1)
-        self.assertEqual(markdown.count("![Location reference"), len(data["scenes"]))
+        self.assertEqual(markdown.count('alt="Location reference: location kitchen v1"'), len(data["scenes"]))
 
         add_image(data, self.folder, "location_balcony_v1", "assets/location-balcony.svg", "location", width=480, height=270)
         data["scenes"][2]["continuity"]["location"] = "Balcony"
@@ -307,8 +340,8 @@ class StoryboardTests(unittest.TestCase):
         errors, _ = self.check(data)
         self.assertFalse(errors, errors)
         markup, _ = self.outputs(data)
-        scene_1 = markup.split('<section class="scene" id="scene_01"', 1)[1].split("</section>", 1)[0]
-        scene_3 = markup.split('<section class="scene" id="scene_03"', 1)[1].split("</section>", 1)[0]
+        scene_1 = scene_html_fragment(markup, "scene_01")
+        scene_3 = scene_html_fragment(markup, "scene_03")
         self.assertIn("assets/location-kitchen.svg", scene_1)
         self.assertIn("assets/location-balcony.svg", scene_3)
         self.assertNotIn("assets/location-balcony.svg", scene_1)
@@ -342,7 +375,7 @@ class StoryboardTests(unittest.TestCase):
         self.assertFalse(errors, errors)
         self.assertTrue(any("scene_01 location is unconfirmed" in warning for warning in warnings))
         markup, markdown = self.outputs(data)
-        scene_1 = markup.split('<section class="scene" id="scene_01"', 1)[1].split("</section>", 1)[0]
+        scene_1 = scene_html_fragment(markup, "scene_01")
         self.assertIn("Location not confirmed", scene_1)
         self.assertNotIn("scene-location-image", scene_1)
         self.assertIn("**Location** · Location not confirmed", markdown)
@@ -377,7 +410,7 @@ class StoryboardTests(unittest.TestCase):
         self.assertFalse(errors, errors)
         self.assertTrue(old_path.is_file())
         markup, _ = self.outputs(data)
-        section = markup.split('<section class="scene" id="scene_01"', 1)[1].split("</section>", 1)[0]
+        section = scene_html_fragment(markup, "scene_01")
         self.assertIn("location-kitchen-v2.svg", section)
         self.assertNotIn("location_kitchen_v1</a>", section)
 
