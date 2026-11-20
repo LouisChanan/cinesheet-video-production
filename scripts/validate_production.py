@@ -85,9 +85,17 @@ def check_production(data, project_dir):
                 errors.append(f"{sid} speaker ID unknown: {line['speaker_id']}")
 
         video = scene["video"]
+        location_refs = []
         for aid in video["reference_asset_ids"]:
             if aid not in assets:
                 errors.append(f"{sid} references unknown video asset: {aid}")
+            elif assets[aid]["kind"] == "location":
+                location_refs.append(aid)
+        location = scene["continuity"]["location"].strip()
+        if location and not location_refs:
+            warnings.append(f"{sid} has a stated location but no location reference asset is linked")
+        elif not location:
+            warnings.append(f"{sid} location is unconfirmed; do not invent a location reference")
         if video["generation_status"] == "completed":
             warnings.append(f"{sid}: generation_status=completed. Verify the actual video file separately.")
 

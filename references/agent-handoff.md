@@ -8,8 +8,8 @@ Follow the [approval gates](../SKILL.md#approval-gates) for the written plan, dr
 
 ## Agent contract
 
-- Storyboard Image Agent reads `storyboard_panels` in scene and panel order. For drafts, use the preview authorization, which can be recorded before plan approval. For full stills, check the approved plan, approved contact sheet, and separate set authorization together. Record actual output files when they exist.
-- Video Agent reads scenes in numerical order, references verified assets, creates clips, reports per-scene job IDs and status (outside this v1 schema or via a subsequent versioned schema).
+- Storyboard Image Agent reads `storyboard_panels` in scene and panel order, including linked location references where relevant. For drafts, use the preview authorization, which can be recorded before plan approval. For full stills, check the approved plan, approved contact sheet, and separate set authorization together. Record actual output files when they exist; a location reference does not satisfy a panel still.
+- Video Agent reads scenes in numerical order and uses each scene's `video.reference_asset_ids`, including its shared `kind=location` reference, to create clips. It reports per-scene job IDs and status (outside this v1 schema or via a subsequent versioned schema).
 - Audio Agent reads dialogue/ambience/SFX/BGM; never reuse copyrighted voices or music without rights.
 - Editing Agent reads scene timing and layout, creates composite and QA report; inspect original product label during finishing.
 

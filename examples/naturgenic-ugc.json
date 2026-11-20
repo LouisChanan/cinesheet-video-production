@@ -55,6 +55,14 @@
   ],
   "assets": [
     {
+      "id": "location_kitchen_v1",
+      "kind": "location",
+      "path": null,
+      "source": "generated",
+      "status": "planned",
+      "description": "Warm white modern Thai apartment kitchen"
+    },
+    {
       "id": "bottle",
       "kind": "product",
       "path": null,
@@ -130,7 +138,7 @@
         "model": "seedance",
         "prompt": "Photorealistic 9:16 authentic Thai smartphone UGC romantic comedy, 10 seconds, same cozy warm white kitchen, wife Thai age 28 medium dark brown hair in cream blouse films selfie, surprised playful face, husband Thai age 30 short black hair in cream apron smiles at cooking stove with visibly greasy frying pan. Brief realistic selfie pan reveals messy cooking area. Orange tabby cat stays safely on clean distant floor, meows. Natural spoken Thai wife: \"แต่งงานอาทิตย์เดียว เพิ่งรู้ว่าสามีทำอาหารเก่ง แต่ไม่เคยล้าง!\" Natural lip sync only if model supports Thai audio, otherwise dialogue handled in post. Warm light, realistic hands, single wife, single husband, one cat, no text overlays baked in.",
         "negative_prompt": "no face drift, no duplicates, no extra limbs, no warped bottle label, no pet interacting with cleaning liquid",
-        "reference_asset_ids": [],
+        "reference_asset_ids": ["location_kitchen_v1"],
         "unverified_capabilities": [
           "Thai native audio support",
           "reference image roles/duration for chosen Seedance version"
@@ -193,7 +201,7 @@
         "model": "seedance",
         "prompt": "Photorealistic 9:16 10-second smartphone UGC in the same warm Thai kitchen. No reference image is attached. Close on the wife's hand as she folds a cloth and makes one steady pass across the turned-off, cool stovetop. Keep space to the right for a verified product photo at the edit stage. Spoken Thai by the wife if the target supports it: \"มาช่วยกันเช็ดเตากันค่ะ!\" Keep the composition stable and the reserved space empty at the end.",
         "negative_prompt": "no face drift, no duplicate hands, no invented packaging or label text, no baked-in subtitles",
-        "reference_asset_ids": [],
+        "reference_asset_ids": ["location_kitchen_v1"],
         "unverified_capabilities": [
           "Thai native audio support",
           "reference image roles/duration for chosen Seedance version"
@@ -255,7 +263,7 @@
         "model": "seedance",
         "prompt": "Photorealistic 9:16 10-second UGC romantic-comedy ending in the same warm Thai kitchen. No reference image is attached. The husband in a cream apron wipes the counter and smiles at his wife in her cream blouse holding the orange tabby a few steps away. Thai dialogue if the target supports it: \"ต่อไปผมล้างเองครับ!\" The cat gives a short meow. End on a steady view of the counter with an empty area reserved for a verified product photo in editing.",
         "negative_prompt": "no face drift, no duplicates, no extra limbs, no invented packaging or label text, no baked-in subtitles",
-        "reference_asset_ids": [],
+        "reference_asset_ids": ["location_kitchen_v1"],
         "unverified_capabilities": [
           "Thai native audio support",
           "reference image roles/duration for chosen Seedance version"

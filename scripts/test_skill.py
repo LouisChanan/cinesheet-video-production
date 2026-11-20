@@ -45,8 +45,12 @@ def add_image(data, folder, aid, path, kind, *, width=480, height=270, source="g
         '<rect x="82" y="6" width="32" height="48" fill="#26549c"/></svg>',
         encoding="utf-8",
     )
-    data["assets"].append({
-        "id": aid, "kind": kind, "path": path, "source": source,
+    record = next((asset for asset in data["assets"] if asset["id"] == aid), None)
+    if record is None:
+        record = {"id": aid}
+        data["assets"].append(record)
+    record.update({
+        "kind": kind, "path": path, "source": source,
         "status": "present", "description": aid.replace("_", " "),
     })
     return target
@@ -63,6 +67,7 @@ def draft_with_images(folder):
         storyboard_images_status="not_started",
     )
     add_image(data, folder, "contact_v1", "assets/ภาพรวม storyboard.svg", "storyboard")
+    add_image(data, folder, "location_kitchen_v1", "assets/location-kitchen.svg", "location", width=480, height=270)
     for character in data["characters"]:
         cid = character["id"]
         aid = f"character_sheet_{cid}_v1"
@@ -71,16 +76,18 @@ def draft_with_images(folder):
     add_image(data, folder, "wardrobe_ref", "assets/wardrobe.svg", "character", source="user")
     data["characters"][0]["reference_asset_ids"].append("wardrobe_ref")
     for scene, descriptions in zip(data["scenes"], (("Kitchen setup",), ("Wipe",), ("Cat enters", "End frame"))):
+        scene["video"]["reference_asset_ids"] = ["location_kitchen_v1"]
         scene["visual"]["storyboard_panels"] = [
-            {"id": f"{scene['id']}_panel_{index}", "description": description, "image_asset_id": None}
+            {"id": f"{scene['id']}_panel_{index}", "description": description, "image_asset_id": None,
+             "reference_asset_ids": ["location_kitchen_v1"]}
             for index, description in enumerate(descriptions, start=1)
         ]
     first = data["scenes"][0]
     first["visual"]["storyboard_panels"][0].update(
         image_prompt="Medium shot from the written brief. No product photo is attached.",
-        reference_asset_ids=["bottle"],
+        reference_asset_ids=["bottle", "location_kitchen_v1"],
     )
-    first["video"].update(model="MiniMax-H3", prompt=H3_PROMPT, reference_asset_ids=["wardrobe_ref"])
+    first["video"].update(model="MiniMax-H3", prompt=H3_PROMPT, reference_asset_ids=["wardrobe_ref", "location_kitchen_v1"])
     return data
 
 
@@ -207,6 +214,8 @@ class StoryboardTests(unittest.TestCase):
         self.assertIn('<details class="contact-details" open>', markup)
         self.assertIn('<details class="cast-details" open>', markup)
         self.assertEqual(markup.count('class="cast-reference character-sheet"'), 3)
+        self.assertEqual(markup.count('class="scene-location"'), len(self.draft["scenes"]))
+        self.assertEqual(markup.count('class="scene-location-image"'), len(self.draft["scenes"]))
         self.assertIn('class="cast-reference"', markup)
         self.assertIn('class="asset-status planned"', markup)
         self.assertIn('class="asset-thumb asset-thumb-wide"', markup)
@@ -219,6 +228,7 @@ class StoryboardTests(unittest.TestCase):
                 "Full storyboard stills", "Video production", "Not authorized", "Negative Prompt",
                 "On-screen text", "แต่งงานได้ 7 วัน!", "Video reference assets", "wardrobe",
                 "Unverified model capabilities", "Acceptance criteria", "No product photo is attached.",
+                "Location reference", "Warm white modern Thai apartment kitchen",
             ):
                 self.assertIn(text, output)
             self.assertNotIn("bottle.png", output)
@@ -277,6 +287,99 @@ class StoryboardTests(unittest.TestCase):
         for output in self.outputs(data):
             self.assertNotIn("scene_01_panel_1_still.svg", output)
             self.assertIn("Set unavailable", output)
+
+    def test_location_reference_reuse_and_distinct_scene_mapping(self):
+        data = self.draft
+        errors, warnings = self.check(data)
+        self.assertFalse(errors, errors)
+        self.assertFalse(any("no location reference" in warning for warning in warnings))
+        markup, markdown = self.outputs(data)
+        for scene in data["scenes"]:
+            section = markup.split(f'<section class="scene" id="{scene["id"]}"', 1)[1].split("</section>", 1)[0]
+            self.assertIn("assets/location-kitchen.svg", section)
+        self.assertEqual(markdown.count("![Location reference · Draft"), len(data["scenes"]))
+        self.assertEqual(markup.count('id="asset-group-location"'), 1)
+        self.assertEqual(markdown.count("![Location reference"), len(data["scenes"]))
+
+        add_image(data, self.folder, "location_balcony_v1", "assets/location-balcony.svg", "location", width=480, height=270)
+        data["scenes"][2]["continuity"]["location"] = "Balcony"
+        data["scenes"][2]["video"]["reference_asset_ids"] = ["location_balcony_v1"]
+        errors, _ = self.check(data)
+        self.assertFalse(errors, errors)
+        markup, _ = self.outputs(data)
+        scene_1 = markup.split('<section class="scene" id="scene_01"', 1)[1].split("</section>", 1)[0]
+        scene_3 = markup.split('<section class="scene" id="scene_03"', 1)[1].split("</section>", 1)[0]
+        self.assertIn("assets/location-kitchen.svg", scene_1)
+        self.assertIn("assets/location-balcony.svg", scene_3)
+        self.assertNotIn("assets/location-balcony.svg", scene_1)
+
+    def test_location_planned_missing_and_unlinked_placeholders(self):
+        data = self.draft
+        asset = next(asset for asset in data["assets"] if asset["id"] == "location_kitchen_v1")
+        asset.update(path=None, status="planned", description="Kitchen")
+        markup, markdown = self.outputs(data)
+        self.assertEqual(markup.count("Location reference · Kitchen · Planned"), len(data["scenes"]))
+        self.assertEqual(markdown.count("Location reference · Kitchen · Planned"), len(data["scenes"]))
+        self.assertNotIn("location-kitchen.svg", markup + markdown)
+
+        asset.update(path="assets/removed-location.svg", status="missing")
+        markup, markdown = self.outputs(data)
+        self.assertEqual(markup.count("Location reference · Kitchen · File missing"), len(data["scenes"]))
+        self.assertEqual(markdown.count("Location reference · Kitchen · File missing"), len(data["scenes"]))
+        self.assertNotIn("removed-location.svg", markup + markdown)
+
+        data["scenes"][1]["video"]["reference_asset_ids"] = []
+        errors, warnings = self.check(data)
+        self.assertFalse(errors, errors)
+        self.assertTrue(any("scene_02 has a stated location but no location reference" in warning for warning in warnings))
+        markup, markdown = self.outputs(data)
+        self.assertIn("Planned · no location image linked", markup)
+        self.assertIn("Location reference · Planned · no location image linked", markdown)
+
+        data["scenes"][0]["continuity"]["location"] = ""
+        data["scenes"][0]["video"]["reference_asset_ids"] = []
+        errors, warnings = self.check(data)
+        self.assertFalse(errors, errors)
+        self.assertTrue(any("scene_01 location is unconfirmed" in warning for warning in warnings))
+        markup, markdown = self.outputs(data)
+        scene_1 = markup.split('<section class="scene" id="scene_01"', 1)[1].split("</section>", 1)[0]
+        self.assertIn("Location not confirmed", scene_1)
+        self.assertNotIn("scene-location-image", scene_1)
+        self.assertIn("**Location** · Location not confirmed", markdown)
+
+    def test_location_revision_relinks_without_deleting_old_file(self):
+        data = self.draft
+        add_image(data, self.folder, "location_kitchen_v1", "assets/location-kitchen.svg", "location", width=480, height=270)
+        add_full_set(data, self.folder)
+        data["workflow"]["production_authorized"] = True
+        old = next(asset for asset in data["assets"] if asset["id"] == "location_kitchen_v1")
+        old_path = self.folder / old["path"]
+        self.assertTrue(old_path.is_file())
+        add_image(data, self.folder, "location_kitchen_v2", "assets/location-kitchen-v2.svg", "location", width=480, height=270)
+        for scene in data["scenes"]:
+            ids = scene["video"]["reference_asset_ids"]
+            scene["video"]["reference_asset_ids"] = ["location_kitchen_v2" if aid == old["id"] else aid for aid in ids]
+            for panel in scene["visual"]["storyboard_panels"]:
+                panel["reference_asset_ids"] = [
+                    "location_kitchen_v2" if aid == old["id"] else aid
+                    for aid in panel.get("reference_asset_ids", [])
+                ]
+        data["workflow"].update(
+            approval_status="review", storyboard_images_authorized=False,
+            storyboard_images_status="not_started", production_authorized=False,
+            storyboard_preview_status="awaiting_review",
+        )
+        for scene in data["scenes"]:
+            for panel in scene["visual"]["storyboard_panels"]:
+                panel["image_asset_id"] = None
+            scene["visual"]["storyboard_asset_ids"] = []
+        errors, _ = self.check(data)
+        self.assertFalse(errors, errors)
+        self.assertTrue(old_path.is_file())
+        markup, _ = self.outputs(data)
+        section = markup.split('<section class="scene" id="scene_01"', 1)[1].split("</section>", 1)[0]
+        self.assertIn("location-kitchen-v2.svg", section)
+        self.assertNotIn("location_kitchen_v1</a>", section)
 
     def test_staged_links_require_authorization_and_never_self_reference(self):
         data = self.draft

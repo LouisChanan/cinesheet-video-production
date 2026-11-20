@@ -98,6 +98,11 @@ details[open]>summary:after{content:"−"}
 .storyboard-frame img{display:block;width:100%;height:auto;max-height:680px;object-fit:contain;background:var(--soft)}
 .storyboard-frame figcaption{display:flex;justify-content:space-between;gap:8px;padding:8px 2px 2px;font-size:.8rem;line-height:1.4;color:var(--muted)}
 .storyboard-empty{border-left:3px solid var(--line);padding:9px 12px;color:var(--muted)}
+.scene-location{margin:0 0 18px}
+.scene-location h3{display:flex;justify-content:space-between;gap:8px;margin:0 0 8px;color:var(--green)}
+.scene-location figure{margin:0}
+.scene-location-image{display:block;width:100%;height:auto;max-height:460px;object-fit:contain;background:var(--soft);border:1px solid var(--line)}
+.scene-location figcaption,.scene-location-status{display:block;margin-top:5px;color:var(--muted);font-size:.78rem}
 .ref-list{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
 .ref-chip{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border:1px solid #c8d4bc;color:var(--green);font-size:.76rem;background:#f1f4e9;overflow-wrap:anywhere}
 .ref-chip b{color:var(--orange);font-size:.68rem;letter-spacing:.06em}
@@ -137,6 +142,7 @@ button:hover{background:#174536}
 .asset-thumb{display:block;width:100%;aspect-ratio:3/4;object-fit:cover;background:var(--soft);border:1px solid var(--line)}
 .asset-thumb-wide{aspect-ratio:16/9;object-fit:contain}
 .asset-thumb-empty{display:grid;place-items:center;width:100%;aspect-ratio:3/4;padding:6px;background:var(--soft);color:var(--muted);font-size:.68rem;text-align:center}
+.asset-thumb-empty.asset-thumb-wide{aspect-ratio:16/9}
 .asset-card-content{min-width:0}
 .asset-card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .asset-name{font-weight:800;line-height:1.35;overflow-wrap:anywhere}
@@ -351,6 +357,71 @@ def storyboard_preview_html(scene, assets):
     return f'<div class="storyboard-grid" data-count="{len(figures)}">' + "".join(figures) + "</div>"
 
 
+def scene_location_assets(scene, assets):
+    result = []
+    seen = set()
+    for aid in scene["video"].get("reference_asset_ids", []):
+        asset = assets.by_id.get(aid)
+        if asset and asset.get("kind") == "location" and aid not in seen:
+            result.append(asset)
+            seen.add(aid)
+    return result
+
+
+def scene_location_html(scene, assets, approval_status):
+    location = scene["continuity"].get("location", "").strip()
+    refs = scene_location_assets(scene, assets)
+    if not refs:
+        label = location or "Location not confirmed"
+        return (
+            '<div class="scene-location"><h3>Location reference</h3>'
+            f'<p class="small">{e(label)}</p>'
+            '<p class="scene-location-status">Planned · no location image linked</p></div>'
+        )
+    parts = ['<div class="scene-location"><h3>Location reference</h3>']
+    for asset in refs:
+        status = assets.status(asset, image=True)
+        label = (
+            "Approved" if status == "present" and approval_status == "approved"
+            else "Draft" if status == "present" else FILE_STATUS_LABELS[status]
+        )
+        name = asset_display_name(asset)
+        href = assets.href(asset, image=True)
+        if href:
+            parts.append(
+                '<figure><a href="' + e(href) + '"><img class="scene-location-image" loading="lazy" src="'
+                + e(href) + '" alt="Location reference: ' + e(name) + '"></a>'
+                + '<figcaption>Location reference · ' + e(name) + ' · ' + e(label) + '</figcaption></figure>'
+            )
+        else:
+            parts.append(
+                '<p class="scene-location-status">Location reference · ' + e(name) + ' · ' + e(label) + '</p>'
+            )
+    return "".join(parts) + "</div>"
+
+
+def scene_location_markdown(scene, assets, approval_status):
+    location = scene["continuity"].get("location", "").strip() or "Location not confirmed"
+    lines = ["", "**Location reference**", "", f"**Location** · {markdown_text(location)}"]
+    refs = scene_location_assets(scene, assets)
+    if not refs:
+        lines += ["", "Location reference · Planned · no location image linked"]
+        return lines
+    for asset in refs:
+        status = assets.status(asset, image=True)
+        label = (
+            "Approved" if status == "present" and approval_status == "approved"
+            else "Draft" if status == "present" else FILE_STATUS_LABELS[status]
+        )
+        href = assets.href(asset, image=True)
+        name = markdown_text(asset_display_name(asset))
+        if href:
+            lines += ["", f"![Location reference · {label} · {name}]({href})"]
+        else:
+            lines += ["", f"Location reference · {name} · {label}"]
+    return lines
+
+
 def project_storyboard_preview_html(workflow, assets, review_label):
     asset = assets.by_id.get(assets.storyboard.preview_id, {})
     href = assets.href(asset, image=True)
@@ -498,12 +569,13 @@ def asset_rows_html(assets, scenes, characters):
             display_status=assets.status(asset)
             preview=assets.href(asset,image=True)
             href=assets.href(asset)
-            wide=aid==assets.storyboard.preview_id or aid in sheet_ids
+            wide=aid==assets.storyboard.preview_id or aid in sheet_ids or asset.get('kind')=='location'
             if preview:
                 thumb_class='asset-thumb asset-thumb-wide' if wide else 'asset-thumb'
                 media='<a class="asset-thumb-link" href="'+e(preview)+'"><img class="'+thumb_class+'" loading="lazy" src="'+e(preview)+'" alt="Preview: '+e(display_name)+'"></a>'
             else:
-                media='<div class="asset-thumb-empty">'+e(FILE_STATUS_LABELS[display_status] if display_status!='present' else 'No image preview')+'</div>'
+                empty_class='asset-thumb-empty asset-thumb-wide' if wide else 'asset-thumb-empty'
+                media='<div class="'+empty_class+'">'+e(FILE_STATUS_LABELS[display_status] if display_status!='present' else 'No image preview')+'</div>'
             scene_items=sorted(usage.get(aid,[]),key=lambda item:item[1])
             if scene_items:
                 scene_links='<div class="asset-scenes"><span class="asset-scenes-label">ใช้ใน</span>'+''.join('<a class="asset-scene-link" href="#'+e(sid)+'">'+e(label)+'</a>' for sid,label in scene_items)+'</div>'
@@ -660,7 +732,7 @@ def render_html(d, base_dir=None, brand_accent=None, brand_secondary=None, *, ou
         start=scene['start_seconds'];end=start+scene['duration_seconds']
         parts += ['<section class="scene" id="'+e(scene['id'])+'" aria-labelledby="heading-'+e(scene['id'])+'">']
         parts += ['<div class="scene-head"><span class="scene-number" aria-hidden="true">'+str(index).zfill(2)+'</span><div class="scene-title-wrap"><p class="section-kicker">Scene '+str(index).zfill(2)+'</p><h2 id="heading-'+e(scene['id'])+'">'+e(scene['narrative_beat'])+'</h2></div><span class="scene-time">'+str(start).zfill(2)+'–'+str(end).zfill(2)+'s</span></div>']
-        parts += ['<div class="scene-grid"><div class="scene-media">'+storyboard_preview_html(scene,assets)+'</div><div class="scene-content">']
+        parts += ['<div class="scene-grid"><div class="scene-media">'+scene_location_html(scene,assets,workflow["approval_status"])+storyboard_preview_html(scene,assets)+'</div><div class="scene-content">']
         parts += ['<p class="scene-action">'+e(scene['story_action'])+'</p>']
         facts=[('Shot size',visual.get('shot_size','')),('Angle',visual.get('angle','')),('Movement',visual.get('movement',''))]
         parts += ['<div class="scene-facts">'+''.join('<div><span class="fact-label">'+label+'</span><span class="fact-value">'+e(value)+'</span></div>' for label,value in facts)+'</div>']
@@ -782,6 +854,7 @@ def render_markdown(d, base_dir=None, *, output_dir=None):
             "", markdown_text(scene["story_action"]),
             "", f"**Shot** · {shot}",
         ]
+        lines += scene_location_markdown(scene, assets, workflow["approval_status"])
         panels = scene_panel_records(scene, assets.by_id)
         if not panels:
             lines += ["", "No storyboard panels linked."]
